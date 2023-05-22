@@ -1,0 +1,126 @@
+REST
+(representation state transfer)
+
+-> Style of Architecture to build Web Services
+-> Set of Principles
+
+Rest is Stateless ( The Server should not store any Client State in the Server)
+
+>Net core provides powerfull platform for bulding web services
+HTTP verbs ,  Routing ,  Model Binding , COntent negotitation  , Response Type.
+
+http verbs
+Get, post, update , Delete ,  Patch , Options.
+
+get -  get all employees
+get  -  get all employyees/id
+post  -  Create an Employee
+put  -  Update an Employee
+Delete  -  Delete an Employee
+
+Dependencies nuget
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+
+
+
+DBContext Class
+
+> maintaining connection to DB
+> Track Changes
+> Perform CRUD Operations
+> Bridge Between domain names and DataBase
+
+
+                CONTROLLER <>  DBCONTEXT <>  DATABASE
+
+
+
+DEPENDENCY INJECTION
+
+> Design pattern to increase Maintainibility and Testablility
+> Dependency injection  built into  ASP.net  Core
+> DI container  is Responsible for Creating and Managing Instances
+
+
+Migration
+Add-Migration "First Migration"(Name of Migration)
+Update-Database
+
+
+NEWID() is used to create guid inside db
+
+
+
+DTOs (DATA TRANSFER OBJECTS)
+> used  to transfer  data Between  Different layer
+> Typically Contain a Subset  of the Properties in the domain Model
+> For example  Transferring  data over a  Network
+
+
+               [ CLIENT ]  -  [DTO (Data Transfer Layer)]   --  [[ A P I ]]  --  [DOMAIN MODEL]  -- [DATABASE]  ->
+
+> we have domain model inside api .it is good practice to add a layer of DTO .
+> we never Send domain model directly to client but we send DTO instead.
+> Once we get dbcontext class provide us list of domain model then we do mapping  between domain model  and the DTO . So the we send DTO back to the client.
+> if info comes from client . we receive DTO then we convert  DTO to domain model then we send  domail model using entity frame work core to database.
+> Dtos can be used to match Business Requirements.
+
+
+
+Advantages of  DT0s :->
+> Separation of Concerns
+> Performance
+> Security
+> Versioning
+
+
+
+ASYNCHRONOUS PROGRAMMING :->
+> Traditional synchronous programming - programme is executed in block (waiting for long process to complete decreasing performance )
+> Poor Performance
+> Async/Await Keywords  (-> when we use this it can handle multiple task while one thread is waiting other threads will continue to Work)
+> Handle More Request
+
+
+
+REPOSITORY PATTERN :->
+- Design pattern  to separate  the data access layer from the applcation
+- Provides interface  without  exposing the  Implementation
+- Helps Create Abstraction
+
+
+                                   DbContext
+                                      |
+              CONTROLLER     --     REPOSITORY         --       DATABASE
+
+- Repository pattern typically involves creating  an abstraction layer between application and database 
+- Repository class is Responsible for Performing CRUD Operations exposes set of methods that application can use to interacat with the data.
+- Repositories can be added inBetween the controller and the database .So that all the operations on the database is then handled by Repository.
+- DbContext class is injected inside a Repository
+- Controller will use Repository instead of using DbConext. Controller has No Aware of what's Being called through the DbContext.
+- Controller is just using the interface methods exposed by the interface Repository.
+
+
+BENEFITS :->
+- Decoupling
+- Consistency
+- Performance
+- Multiple data Source (SWITCHING).
+
+
+
+AutoMapper :->
+> Automapper is a popular object to object Library for  Dotnet Application including asp.net core
+> It Allows us to simplify the mapping process between Two objects With Different Structures by defining Mapping Between Their properties
+> Simplification.
+> Map Between DTOs and Domain models and vice-versa.
+>  Quite Powerful Apart from just Simple Object to Object Mapping.
+
+
+
+
+Navigation Properties :->
+> In entity Framework , core navigation properties are properties that allows us to navigate from one domain model to another or from one entity to another in a Relational DB.
+> Walk Domain model  will have  Region naviation Property.
+> Navigation proprties are typically defined in the form of an object or collection of object  that reference another entites 
