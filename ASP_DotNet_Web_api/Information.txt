@@ -124,3 +124,63 @@ Navigation Properties :->
 > In entity Framework , core navigation properties are properties that allows us to navigate from one domain model to another or from one entity to another in a Relational DB.
 > Walk Domain model  will have  Region naviation Property.
 > Navigation proprties are typically defined in the form of an object or collection of object  that reference another entites 
+
+
+
+Authentication :->
+> The Process to Determine a User's Identity
+> UserName and Password
+> By using authentication, we can check if we trust the User.
+
+----  >  if we keep our api anybody who knows our url would be able to get all the resources from our api and we will be able to modify the data that we have
+          stored in our SQL server. if user has bad intention they can even delete all the data.
+
+
+
+
+Authorization :->
+> Refers to the process of determining whether a user has Permission.
+> Roles, Policies , Claims.
+> Check if user has ReadOnly or ReadWrite Role.
+
+----  > we have normal user coming to our API. logging In and are able to get the Resources.
+      > ALso we have particular type of user which is admin user who are able to modify the data.
+
+
+
+Authentication Flow :->
+> we are using an authentication mehod in which the server creates a JWT token and pass it to the client
+> json Web token (JWT) is an open standard (RFC 7519) that defines a compact and self contained way for securely transmitting information between parties as
+   A JSON object . This information can be verified  and trusted because it is digitally signed.
+
+
+
+FLOW :->
+> user will type  username and password using a login form and website will send this information to api.
+> API will check username and password if information is correct it will generate a jwt token for website user.
+> The Website user the uses this JWT Token as a way to make HTTP calls to the api to access the resource of the API and Get data from API
+> Api will check if the token is correct .the API will return  the data  that the website  asked for.
+if website doesn't send a JWT or it is invalid. No data returned from API.
+
+
+
+
+                               Login using username and password
+USERS    ---      WEBSITE      ----------------------------------->      API
+                   www                 GET JWT Token
+                                <---------------------------
+
+                                Use JWT token to Make a CALL
+                                --------------------------->
+                                  GET data BACk
+                                <---------------------------
+
+
+
+Migration for Auth
+PM> Add-Migration "Creating Auth DataBase" -Context "MZWalksAuthDbContext"
+PM> Update-DataBase -Context "MZWalksAuthDbContext"
+
+
+
+

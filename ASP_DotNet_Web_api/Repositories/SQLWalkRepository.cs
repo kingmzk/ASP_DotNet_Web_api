@@ -75,7 +75,7 @@ namespace ASP_DotNet_Web_api.Repositories
         }
 
         public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, string?
-            sortBy = null, bool isAcending = true)
+            sortBy = null, bool isAcending = true, int pageNumber = 1, int pageSize = 1000)
         {
             //   return await dbcontext.Walks.Include("Difficulty").Include("Region").ToListAsync();
             var walks = dbcontext.Walks.Include("Difficulty").Include("Region").AsQueryable();
@@ -111,7 +111,12 @@ namespace ASP_DotNet_Web_api.Repositories
 
             }
 
-            return await walks.ToListAsync();
+            //Pagination
+            var skipResults = (pageNumber - 1) * pageSize;
+
+            return await walks.Skip(skipResults).Take(pageSize).ToListAsync();
+
+            //     return await walks.ToListAsync();
         }
     }
 }

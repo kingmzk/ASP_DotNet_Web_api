@@ -4,6 +4,7 @@ using ASP_DotNet_Web_api.Models.domain;
 using ASP_DotNet_Web_api.Models.DTO;
 using ASP_DotNet_Web_api.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASP_DotNet_Web_api.Controllers
@@ -11,6 +12,7 @@ namespace ASP_DotNet_Web_api.Controllers
     // http://localhost:1234/api/regions
     [Route("api/[controller]")]
     [ApiController]
+
     public class RegionsController : ControllerBase
     {
         private readonly MZWalksDbContext dbContext;
@@ -26,6 +28,7 @@ namespace ASP_DotNet_Web_api.Controllers
 
         // Get :  http://localhost:1234/api/regions
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
             // Get regions from the repository
@@ -41,6 +44,7 @@ namespace ASP_DotNet_Web_api.Controllers
         // Get :  http://localhost:1234/api/regions/{id}
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             // Get a region by ID from the repository
@@ -59,9 +63,12 @@ namespace ASP_DotNet_Web_api.Controllers
             return Ok(regionDto);
         }
 
+
+
         // POST :  http://localhost:1234/api/regions
         [HttpPost]
         [ValidateModel]  //custom validated
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
 
@@ -85,6 +92,7 @@ namespace ASP_DotNet_Web_api.Controllers
         [HttpPut]
         [ValidateModel]  //custom validated
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
 
@@ -112,6 +120,7 @@ namespace ASP_DotNet_Web_api.Controllers
         // DELETE :  http://localhost:1234/api/regions/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             // Delete a region by ID from the repository
@@ -133,6 +142,7 @@ namespace ASP_DotNet_Web_api.Controllers
         // PATCH: http://localhost:1234/api/regions/{id}
         [HttpPatch]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer,Reader")]
         public async Task<IActionResult> Patch([FromRoute] Guid id, [FromBody] PatchRegionRequestDto patchRegionRequestDto)
         {
             // Check if the patch request body is null

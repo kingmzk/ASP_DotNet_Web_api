@@ -43,11 +43,12 @@ namespace ASP_DotNet_Web_api.Controllers
 
         //GET
         //GET : /api/walks
-        //GET : /api/walks?filterOn=Name&filterQuery=Track?sortBy=Name&isAcending=true
+        //GET : /api/walks?filterOn=Name&filterQuery=Track?sortBy=Name&isAcending=true&pageNumber=1&pageSize=10
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool? isAcending)
+        public async Task<IActionResult> GetAllAsync([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool? isAcending,
+                                                    [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
         {
-            var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAcending ?? true);
+            var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAcending ?? true, pageNumber, pageSize);
 
             //map domain model to dto
             return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));

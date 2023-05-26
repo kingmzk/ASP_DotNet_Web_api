@@ -1,11 +1,12 @@
 ﻿using ASP_DotNet_Web_api.Models.domain;
+using ASP_DotNet_Web_api.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASP_DotNet_Web_api.Data
 {
     public class MZWalksDbContext : DbContext
     {
-        public MZWalksDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public MZWalksDbContext(DbContextOptions<MZWalksDbContext> dbContextOptions) : base(dbContextOptions)
         {
 
         }
@@ -15,6 +16,8 @@ namespace ASP_DotNet_Web_api.Data
         public DbSet<Region> Regions { get; set; }
 
         public DbSet<Walk> Walks { get; set; }
+
+        public DbSet<Image> Images { get; set; }
 
         //Data Seeding
         protected override void OnModelCreating(ModelBuilder modelBuilder)  //over ride on model creating
