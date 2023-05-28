@@ -6,6 +6,7 @@ using ASP_DotNet_Web_api.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace ASP_DotNet_Web_api.Controllers
 {
@@ -18,25 +19,45 @@ namespace ASP_DotNet_Web_api.Controllers
         private readonly MZWalksDbContext dbContext;
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(MZWalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(MZWalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper, ILogger<RegionsController> logger)
         {
             this.dbContext = dbContext;
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         // Get :  http://localhost:1234/api/regions
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        //  [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
+            //throw exception
+            throw new Exception("Exception is Not Correctly handled");
+
+            logger.LogInformation("Getall Region all Methoď is invoked");
+            logger.LogWarning("This is a Warning log");
+            logger.LogError("THis is a Error Log");
+            /*
+            try                  //for logging in try catch
+            {
+                throw new Exception("This is custom Exception");
+            }
+            catch (Exception ex) 
+            {
+                logger.LogError(ex ,ex.Message);
+                throw;
+            }
+            */
             // Get regions from the repository
             var regionsDomain = await regionRepository.GetAllAsync();
 
             // Map domain models to DTOs
             var regionDto = mapper.Map<List<RegionDto>>(regionsDomain);
 
+            logger.LogInformation($"Finished getall Region all request with data : {JsonSerializer.Serialize(regionsDomain)}"); //converting object into json
             // Return DTOs to the client
             return Ok(regionDto);
         }

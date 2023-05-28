@@ -184,3 +184,20 @@ PM> Update-DataBase -Context "MZWalksAuthDbContext"
 
 
 
+//LOGGING
+> Logging  in asp.net core web api refers to the process of Capturing and Storing Information about the application behaviour and Operations during RunTime.
+> Logging is a critical Component of any application as it helps developers understand how their application is functioning and provides valuable insights and issues that may arise
+> Diagnose and TroubleShoot  problems.
+
+
+//we use 3rd party library SERILOG
+> Popular                  > Flexible          > 3rd party
+> Serilog is a popular logging framework for asp.net core that provides a flexible and powerfull  way to capture and Store Log Data can be integrated with asp.net core
+
+
+
+
+//EXCEPTION HANDLING
+> Handle any Unhandled Exceptions
+> Create Consistant error response
+> Avoid Repitation
